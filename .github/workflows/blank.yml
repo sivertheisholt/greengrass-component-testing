@@ -30,5 +30,6 @@ jobs:
 
       - name: Build and publish Greengrass Component
         run: |
+          cd com.example.ReadApi
           gdk component build
           gdk component publish --bucket sivertheisholt
