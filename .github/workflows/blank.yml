@@ -24,6 +24,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install awscli
 
+      - name: Configure AWS
+        run: |
+          aws configure set aws_access_key_id $(cat aws_access_key_id)
+          aws configure set aws_secret_access_key $(cat aws_secret_access_key)
+
       - name: Install Greengrass Development Kit (GDK)
         run: |
           python3 -m pip install -U git+https://github.com/aws-greengrass/aws-greengrass-gdk-cli.git@v1.2.3
