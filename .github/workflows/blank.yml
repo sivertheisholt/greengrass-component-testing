@@ -26,11 +26,7 @@ jobs:
 
       - name: Install Greengrass Development Kit (GDK)
         run: |
-          sudo apt-get install -y curl
-          curl -s https://d2s8p88vqu9w66.cloudfront.net/releases/greengrass-nucleus-latest.zip > greengrass-nucleus-latest.zip
-          sudo apt-get install -y unzip
-          unzip greengrass-nucleus-latest.zip
-          sudo ./greengrass-nucleus-latest/install.sh
+          python3 -m pip install -U git+https://github.com/aws-greengrass/aws-greengrass-gdk-cli.git@v1.2.3
 
       - name: Build and publish Greengrass Component
         run: |
