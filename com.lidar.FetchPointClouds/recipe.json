@@ -8,7 +8,7 @@
       "DefaultConfiguration": {
         "accessControl": {
           "aws.greengrass.ipc.mqttproxy": {
-            "com.example.ReadApi:mqttproxy:1": {
+            "com.lidar.FetchPointClouds:mqttproxy:1": {
               "policyDescription": "Allows access to publish/subscribe to all topics.",
               "operations": [
                 "aws.greengrass#PublishToIoTCore",
