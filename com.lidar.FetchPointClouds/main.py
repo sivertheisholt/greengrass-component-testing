@@ -10,7 +10,7 @@ from awsiot.greengrasscoreipc.model import (
 )
 
 import blickfeld_scanner
-import json
+import jsonpickle
 
 class LidarPublisher:
     def __init__(self, ipc_client, lidars) -> None:
@@ -18,7 +18,7 @@ class LidarPublisher:
         self.lidars = lidars
 
     def publish_lidars_info(self):
-        lidarsJson = json.dumps(self.lidars)
+        lidarsJson = jsonpickle.encode(self.lidars)
         self.ipc_client.publish_to_iot_core(
             topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
@@ -56,7 +56,7 @@ def main():
               "test/testing", file=sys.stderr)
         traceback.print_exc()
         exit(1)
-        
+
     except Exception:
         print('Exception occurred', file=sys.stderr)
         traceback.print_exc()

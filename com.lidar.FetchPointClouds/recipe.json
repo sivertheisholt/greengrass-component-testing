@@ -28,7 +28,7 @@
           "os": "linux"
         },
         "Lifecycle": {
-          "Install": "python3 -m pip install --user awsiotsdk --upgrade && pip3 install blickfeld_scanner --user awsiotsdk",
+          "Install": "python3 -m pip install --user awsiotsdk --upgrade && pip3 install blickfeld_scanner --user awsiotsdk && pip3 install jsonpickle",
           "Run": "python3 -u {artifacts:decompressedPath}/com.lidar.FetchPointClouds/main.py"
         },
         "Artifacts": [
