@@ -4,6 +4,6 @@ from entities.lidar.scanline import Scanline
 
 class PointCloud:
     def __init__(self, data: dict):
-        self.header = Header(data.get("header"))
-        self.frame = Frame(data.get("frame"))
-        self.scanline = Scanline(data.get("scanline"))
+        self.header = Header(data.header)
+        self.frame = Frame(data.frame)
+        self.scanline = Scanline(data.scanline)

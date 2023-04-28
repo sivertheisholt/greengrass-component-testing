@@ -7,9 +7,9 @@ from entities.lidar.constraint import Constraint
 
 class ScanPattern:
     def __init__(self, data: dict) -> None:
-        self.horizontal = Horizontal(data.get("horizontal"))
-        self.vertical = Vertical(data.get("vertical"))
-        self.pulse = Pulse(data.get("pulse"))
-        self.frame_rate = FrameRate(data.get("frame_Rate"))
-        self.filter = Filter(data.get("filter"))
-        self.constraints = [Constraint(constraint) for key, constraint in data.get("constraints").items()]
+        self.horizontal = Horizontal(data.horizontal)
+        self.vertical = Vertical(data.vertical)
+        self.pulse = Pulse(data.pulse)
+        self.frame_rate = FrameRate(data.frame_rate)
+        self.filter = Filter(data.filter)
+        self.constraints = [Constraint(constraint) for key, constraint in data.constraints]
