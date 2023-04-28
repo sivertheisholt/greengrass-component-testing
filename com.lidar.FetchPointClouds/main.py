@@ -53,7 +53,7 @@ def main():
 
     except Exception as e:
         print('Exception occurred', file=sys.stderr)
-        print("Exception message: " + e)
+        print(e)
         traceback.print_exc()
         exit(1)
 
