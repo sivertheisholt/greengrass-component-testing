@@ -1,0 +1,16 @@
+{
+    "component": {
+      "com.generic.Bitcoin": {
+        "author": "sivertheisholt",
+        "version": "NEXT_PATCH",
+        "build": {
+          "build_system" : "zip"
+        },
+        "publish": {
+          "region": "eu-west-1",
+          "bucket": "sivertheisholt"
+        }
+      }
+    },
+    "gdk_version": "1.0.0"
+  }

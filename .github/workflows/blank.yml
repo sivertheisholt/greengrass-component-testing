@@ -35,6 +35,6 @@ jobs:
 
       - name: Build and publish Greengrass Component
         run: |
-          cd com.generic.Bitcoin
+          cd com.lidar.FetchPointClouds
           gdk component build
           gdk component publish --bucket sivertheisholt
