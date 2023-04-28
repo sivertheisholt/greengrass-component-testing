@@ -19,8 +19,9 @@ class LidarPublisher:
 
     def publish_lidars_info(self):
         lidarsJson = jsonpickle.encode(self.lidars)
-        self.ipc_client.publish_to_iot_core(
-            topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
+        # self.ipc_client.publish_to_iot_core(
+            # topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
+        self.ipc_client.publish_to_iot_core(topic_name="iot/lidar", payload=bytes("Hello there", "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 class Lidar:
     def __init__(self, ip) -> None:
