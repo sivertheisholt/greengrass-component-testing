@@ -1,6 +1,6 @@
 {
     "component": {
-      "com.generic.Bitcoin": {
+      "com.lidar.FetchPointClouds": {
         "author": "sivertheisholt",
         "version": "NEXT_PATCH",
         "build": {
