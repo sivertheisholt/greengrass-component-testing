@@ -13,7 +13,7 @@ import blickfeld_scanner
 import jsonpickle
 
 class LidarPublisher:
-    def __init__(self, ipc_client, lidars) -> None:
+    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars) -> None:
         self.ipc_client = ipc_client
         self.lidars = lidars
 
@@ -51,14 +51,9 @@ def main():
             lidarPublisher.publish_lidars_info()
             time.sleep(10)
 
-    except UnauthorizedError:
-        print('Unauthorized error while subscribing to topic: ' +
-              "test/testing", file=sys.stderr)
-        traceback.print_exc()
-        exit(1)
-
-    except Exception:
+    except Exception as e:
         print('Exception occurred', file=sys.stderr)
+        print("Exception message: " + e)
         traceback.print_exc()
         exit(1)
 
