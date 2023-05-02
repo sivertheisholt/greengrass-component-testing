@@ -11,13 +11,12 @@ from awsiot.greengrasscoreipc.model import (
 
 import blickfeld_scanner
 import jsonpickle
-
-
-
+import copy
+    
 class Lidar:
     def __init__(self, ip):
         self.ip = ip
-        self.frame = None
+        self.frame_data = None
 
     def connect_scanner(self):
         return blickfeld_scanner.scanner(self.ip)
@@ -34,7 +33,7 @@ class Lidar:
         frame = stream.recv_frame()
         print(frame)
 
-        self.frame = Frame(frame)
+        self.frame_data = copy.deepcopy(frame)
 
         stream.stop()
 
@@ -44,11 +43,7 @@ class LidarPublisher:
         self.lidars = lidars
 
     def publish_lidars_info(self):
-        if self.lidars[0].frame == None:
-            print("Frame is empty...")
-            return
-        
-        lidarsJson = jsonpickle.encode(self.lidars[0].frame)
+        lidarsJson = jsonpickle.encode(Frame(self.lidars[0].frame_data))
         self.ipc_client.publish_to_iot_core(topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 def main():
