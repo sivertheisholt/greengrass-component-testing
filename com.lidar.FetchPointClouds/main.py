@@ -47,8 +47,6 @@ def main():
         lidarPublisher = LidarPublisher(ipc_client, lidars)
         while True:
             lidar1.fetch_point_cloud()
-            lidarsJson = jsonpickle.encode(lidars, unpicklable=False)
-            print(lidarsJson)
             lidarPublisher.publish_lidars_info()
             exit()
 
