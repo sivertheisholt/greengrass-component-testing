@@ -12,7 +12,7 @@ from awsiot.greengrasscoreipc.model import (
 import blickfeld_scanner
 import jsonpickle
 import copy
-    
+import boto3
 class Lidar:
     def __init__(self, ip):
         self.ip = ip
@@ -43,8 +43,12 @@ class LidarPublisher:
         self.lidars = lidars
 
     def publish_lidars_info(self):
-        lidarsJson = jsonpickle.encode(Frame(self.lidars[0].frame_data))
-        self.ipc_client.publish_to_iot_core(topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
+        # Upload the bytes to S3
+        lidarsJsonBytes = bytes(jsonpickle.encode(Frame(self.lidars[0].frame_data)))
+        s3_resource = boto3.resource('s3')
+        s3_resource.put_object(Bucket="sivertheisholt", Key="lidar1", Body=lidarsJsonBytes)
+        print('JSON file uploaded to S3.')
+        # self.ipc_client.publish_to_iot_core(topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 def main():
     print('Starting fetching lidar data')
