@@ -5,6 +5,7 @@ from entities.lidar.frame import Frame
 
 from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
 from awsiot.greengrasscoreipc.model import (
+    UnauthorizedError,
     QOS
 )
 
@@ -40,6 +41,7 @@ class Lidar:
         stream.stop()
 
 def main():
+    print('Starting fetching lidar data')
     try:
         ipc_client = GreengrassCoreIPCClientV2()
         lidar1 = Lidar("192.168.26.26")
@@ -50,9 +52,13 @@ def main():
             lidarPublisher.publish_lidars_info()
             time.sleep(10)
 
-    except Exception:
-        print('Exception occurred', file=sys.stderr)
+    except UnauthorizedError:
+        print('Unauthorized error while posting/sub to topics', file=sys.stderr)
         traceback.print_exc()
+        exit(1)
+    except Exception as e:
+        print("An error occurred:", e)
+        print(traceback.format_exc())
         exit(1)
 
 if __name__ == '__main__':
