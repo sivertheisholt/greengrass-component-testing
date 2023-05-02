@@ -25,8 +25,15 @@ class Lidar:
     def fetch_point_cloud(self):
         device = self.connect_scanner()
 
+        print("Connected to lidar")
+
+        print("Getting stream")
         stream = device.get_point_cloud_stream()
+
+        print("Receiving frame")
         frame = stream.recv_frame()
+        print(frame)
+        
         self.frame = Frame(frame)
 
         stream.stop()
@@ -40,6 +47,7 @@ class LidarPublisher:
         if self.lidars[0].frame == None:
             print("Frame is empty...")
             return
+        
         
         print(jsonpickle.encode(self.lidars[0].frame.scanlines[0].points[0]))
         
