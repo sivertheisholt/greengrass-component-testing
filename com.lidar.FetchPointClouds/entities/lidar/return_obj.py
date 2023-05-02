@@ -1,6 +1,6 @@
 class Return:
-    def __init__(self, data: dict) -> None:
+    def __init__(self, data: dict):
         self.id = data.id
-        self.cartesian = data.cartesian
+        self.cartesian = [cartesian for cartesian in data.cartesian]
         self.range = data.range
         self.intensity = data.intensity

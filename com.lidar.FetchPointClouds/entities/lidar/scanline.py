@@ -1,7 +1,7 @@
 from entities.lidar.point import Point
 
 class Scanline:
-    def __init__(self, data: dict) -> None:
+    def __init__(self, data: dict):
         self.id = data.id
         self.frame_id = data.frame_id
         self.points = [Point(point) for point in data.points]
