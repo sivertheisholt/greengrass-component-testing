@@ -48,9 +48,9 @@ def main():
         while True:
             lidar1.fetch_point_cloud()
             lidarPublisher.publish_lidars_info()
-            exit()
+            time.sleep(10)
 
-    except Exception as e:
+    except Exception:
         print('Exception occurred', file=sys.stderr)
         traceback.print_exc()
         exit(1)
