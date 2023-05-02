@@ -44,7 +44,7 @@ class LidarPublisher:
 
     def publish_lidars_info(self):
         # Upload the bytes to S3
-        lidarsJsonBytes = bytes(jsonpickle.encode(Frame(self.lidars[0].frame_data)))
+        lidarsJsonBytes = bytes(jsonpickle.encode(Frame(self.lidars[0].frame_data)), "utf-8")
         s3_resource = boto3.resource('s3')
         s3_resource.put_object(Bucket="sivertheisholt", Key="lidar1", Body=lidarsJsonBytes)
         print('JSON file uploaded to S3.')
