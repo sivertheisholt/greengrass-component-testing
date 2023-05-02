@@ -12,17 +12,7 @@ from awsiot.greengrasscoreipc.model import (
 import blickfeld_scanner
 import jsonpickle
 
-class LidarPublisher:
-    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars) -> None:
-        self.ipc_client = ipc_client
-        self.lidars = lidars
 
-    def publish_lidars_info(self):
-        lidarsJson = jsonpickle.encode(self.lidars)
-        self.ipc_client.publish_to_iot_core(
-            topic_name="iot/lidar", payload=bytes("Hello from program", "utf-8"), qos=QOS.AT_LEAST_ONCE)
-        self.ipc_client.publish_to_iot_core(
-            topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 class Lidar:
     def __init__(self, ip) -> None:
@@ -40,6 +30,16 @@ class Lidar:
         self.frame = Frame(frame)
 
         stream.stop()
+
+class LidarPublisher:
+    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars: list[Lidar]) -> None:
+        self.ipc_client = ipc_client
+        self.lidars = lidars
+
+    def publish_lidars_info(self):
+        lidarsJson = jsonpickle.encode(self.lidars[0].frame.scanlines[0].points[0])
+        self.ipc_client.publish_to_iot_core(
+            topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 def main():
     print('Starting fetching lidar data')
