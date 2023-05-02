@@ -15,7 +15,7 @@ import jsonpickle
 
 
 class Lidar:
-    def __init__(self, ip) -> None:
+    def __init__(self, ip):
         self.ip = ip
         self.frame = None
 
@@ -33,13 +33,13 @@ class Lidar:
         print("Receiving frame")
         frame = stream.recv_frame()
         print(frame)
-        
+
         self.frame = Frame(frame)
 
         stream.stop()
 
 class LidarPublisher:
-    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars: list[Lidar]) -> None:
+    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars):
         self.ipc_client = ipc_client
         self.lidars = lidars
 
