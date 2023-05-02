@@ -1,6 +1,6 @@
-from entities.lidar.field import Field
-from entities.lidar.constant import Constant
-from entities.lidar.polynomial import Polynomial
+from entities.lidar_cube.field import Field
+from entities.lidar_cube.constant import Constant
+from entities.lidar_cube.polynomial import Polynomial
 
 class Constraint:
     def __init__(self, data: dict) -> None:

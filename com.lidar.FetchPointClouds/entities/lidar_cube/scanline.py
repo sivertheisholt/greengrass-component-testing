@@ -1,4 +1,4 @@
-from entities.lidar.point import Point
+from entities.lidar_cube.point import Point
 
 class Scanline:
     def __init__(self, data: dict):

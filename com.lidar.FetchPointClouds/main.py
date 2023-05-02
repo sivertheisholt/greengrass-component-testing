@@ -1,54 +1,10 @@
-import sys
 import time
 import traceback
-from entities.lidar.frame import Frame
 
 from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
-from awsiot.greengrasscoreipc.model import (
-    UnauthorizedError,
-    QOS
-)
 
-import blickfeld_scanner
-import jsonpickle
-import copy
-import boto3
-class Lidar:
-    def __init__(self, ip):
-        self.ip = ip
-        self.frame_data = None
-
-    def connect_scanner(self):
-        return blickfeld_scanner.scanner(self.ip)
-
-    def fetch_point_cloud(self):
-        device = self.connect_scanner()
-
-        print("Connected to lidar")
-
-        print("Getting stream")
-        stream = device.get_point_cloud_stream()
-
-        print("Receiving frame")
-        frame = stream.recv_frame()
-        print(frame)
-
-        self.frame_data = copy.deepcopy(frame)
-
-        stream.stop()
-
-class LidarPublisher:
-    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars):
-        self.ipc_client = ipc_client
-        self.lidars = lidars
-
-    def publish_lidars_info(self):
-        # Upload the bytes to S3
-        lidarsJsonBytes = bytes(jsonpickle.encode(Frame(self.lidars[0].frame_data)), "utf-8")
-        s3_resource = boto3.resource('s3')
-        s3_resource.put_object(Bucket="sivertheisholt", Key="lidar1", Body=lidarsJsonBytes)
-        print('JSON file uploaded to S3.')
-        # self.ipc_client.publish_to_iot_core(topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
+from entities.lidar import Lidar
+from entities.lidar_publisher import LidarPublisher
 
 def main():
     print('Starting fetching lidar data')
@@ -59,13 +15,9 @@ def main():
         lidarPublisher = LidarPublisher(ipc_client, lidars)
         while True:
             lidar1.fetch_point_cloud()
+            lidarPublisher.upload_lidars_info()
             lidarPublisher.publish_lidars_info()
             time.sleep(10)
-
-    except UnauthorizedError:
-        print('Unauthorized error while posting/sub to topics', file=sys.stderr)
-        traceback.print_exc()
-        exit(1)
     except Exception as e:
         print("An error occurred:", e)
         print(traceback.format_exc())

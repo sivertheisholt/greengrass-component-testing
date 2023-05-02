@@ -1,4 +1,4 @@
-from entities.lidar.field import Field
+from entities.lidar_cube.field import Field
 
 class Polynomial:
     def __init__(self, data: dict) -> None:

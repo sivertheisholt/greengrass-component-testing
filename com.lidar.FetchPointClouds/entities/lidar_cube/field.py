@@ -1,4 +1,4 @@
-from entities.lidar.identifier import Identifier
+from entities.lidar_cube.identifier import Identifier
 
 class Field:
     def __init__(self, data: dict) -> None:

@@ -1,6 +1,6 @@
-from entities.lidar.header import Header
-from entities.lidar.frame import Frame
-from entities.lidar.scanline import Scanline
+from entities.lidar_cube.header import Header
+from entities.lidar_cube.frame import Frame
+from entities.lidar_cube.scanline import Scanline
 
 class PointCloud:
     def __init__(self, data: dict):

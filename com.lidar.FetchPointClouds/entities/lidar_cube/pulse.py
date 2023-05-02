@@ -1,4 +1,4 @@
-from entities.lidar.custom import Custom
+from entities.lidar_cube.custom import Custom
 
 class Pulse:
     def __init__(self, data: dict) -> None:

@@ -1,5 +1,5 @@
-from entities.lidar.return_obj import Return
-from entities.lidar.direction import Direction
+from entities.lidar_cube.return_obj import Return
+from entities.lidar_cube.direction import Direction
 
 class Point:
     def __init__(self, data: dict):
