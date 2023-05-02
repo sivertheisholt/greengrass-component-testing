@@ -37,9 +37,14 @@ class LidarPublisher:
         self.lidars = lidars
 
     def publish_lidars_info(self):
+        if self.lidars[0].frame == None:
+            print("Frame is empty...")
+            return
+        
+        print(jsonpickle.encode(self.lidars[0].frame.scanlines[0].points[0]))
+        
         lidarsJson = jsonpickle.encode(self.lidars[0].frame.scanlines[0].points[0])
-        self.ipc_client.publish_to_iot_core(
-            topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
+        self.ipc_client.publish_to_iot_core(topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 def main():
     print('Starting fetching lidar data')
