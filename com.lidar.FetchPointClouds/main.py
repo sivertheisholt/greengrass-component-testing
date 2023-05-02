@@ -20,6 +20,8 @@ class LidarPublisher:
     def publish_lidars_info(self):
         lidarsJson = jsonpickle.encode(self.lidars)
         self.ipc_client.publish_to_iot_core(
+            topic_name="iot/lidar", payload=bytes("Hello from program", "utf-8"), qos=QOS.AT_LEAST_ONCE)
+        self.ipc_client.publish_to_iot_core(
             topic_name="iot/lidar", payload=bytes(lidarsJson, "utf-8"), qos=QOS.AT_LEAST_ONCE)
 
 class Lidar:
@@ -34,10 +36,9 @@ class Lidar:
         device = self.connect_scanner()
 
         stream = device.get_point_cloud_stream()
+        frame = stream.recv_frame()
+        self.frame = Frame(frame)
 
-        for i in range(1):
-            frame = stream.recv_frame()
-            self.frame = Frame(frame)
         stream.stop()
 
 def main():
