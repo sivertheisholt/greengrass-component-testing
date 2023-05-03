@@ -1,5 +1,5 @@
-from entities.lidar_cube.optional_value_range import OptionalValueRange
-from entities.lidar_cube.noise import Noise
+from entities.lidar_cube_frame.optional_value_range import OptionalValueRange
+from entities.lidar_cube_frame.noise import Noise
 
 class Filter:
     def __init__(self, data: dict) -> None:

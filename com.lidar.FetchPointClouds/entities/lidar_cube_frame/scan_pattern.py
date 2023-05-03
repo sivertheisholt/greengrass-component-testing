@@ -1,9 +1,9 @@
-from entities.lidar_cube.horizontal import Horizontal
-from entities.lidar_cube.vertical import Vertical
-from entities.lidar_cube.pulse import Pulse
-from entities.lidar_cube.frame_rate import FrameRate
-from entities.lidar_cube.filter import Filter
-from entities.lidar_cube.constraint import Constraint
+from entities.lidar_cube_frame.horizontal import Horizontal
+from entities.lidar_cube_frame.vertical import Vertical
+from entities.lidar_cube_frame.pulse import Pulse
+from entities.lidar_cube_frame.frame_rate import FrameRate
+from entities.lidar_cube_frame.filter import Filter
+from entities.lidar_cube_frame.constraint import Constraint
 
 class ScanPattern:
     def __init__(self, data: dict) -> None:

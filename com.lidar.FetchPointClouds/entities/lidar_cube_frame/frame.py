@@ -1,7 +1,7 @@
-from entities.lidar_cube.packed import Packed
-from entities.lidar_cube.algorithm import Algorithm
-from entities.lidar_cube.scan_pattern import ScanPattern
-from entities.lidar_cube.scanline import Scanline
+from entities.lidar_cube_frame.packed import Packed
+from entities.lidar_cube_frame.algorithm import Algorithm
+from entities.lidar_cube_frame.scan_pattern import ScanPattern
+from entities.lidar_cube_frame.scanline import Scanline
 class Frame:
     def __init__(self, data):
         self.id = data.id
