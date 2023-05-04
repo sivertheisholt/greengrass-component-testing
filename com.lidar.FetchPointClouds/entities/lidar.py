@@ -44,6 +44,6 @@ class Lidar:
 
         self.scanner_status = Scanner(status_data.scanner)
         self.temperatures = [Temperature(temp) for temp in status_data.temperatures]
-        self.time_synchronization = status_data.time_synchronization
+        self.time_synchronization = TimeSynchronization(status_data.time_synchronization)
 
-        print("Dont fetching status")
+        print("Done fetching status")
