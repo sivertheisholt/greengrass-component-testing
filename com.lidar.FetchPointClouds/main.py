@@ -14,27 +14,19 @@ from entities.lidar_cube_frame.frame import Frame
 def main():
     print('Starting fetching lidar data')
     try:
-        # ipc_client = GreengrassCoreIPCClientV2()
+        ipc_client = GreengrassCoreIPCClientV2()
         lidar1 = Lidar("192.168.26.26")
         lidars = [lidar1]
-        # lidarPublisher = LidarPublisher(ipc_client, lidars)
+        lidarPublisher = LidarPublisher(ipc_client, lidars)
         failCount = 0
         while True:
             lidars[0].fetch_state()
-            # lidarPublisher.publish_lidars_status()
+            lidarPublisher.publish_lidars_status()
             if lidars[0].scanner_status.state == 2:
                 failCount = 0
                 lidar1.fetch_point_cloud()
-                s3 = boto3.client('s3')
-                response = s3.list_buckets()
-
-                # Output the bucket names
-                print('Existing buckets:')
-                for bucket in response['Buckets']:
-                    print(f'  {bucket["Name"]}')
-
-                # lidarPublisher.upload_lidars_frame()
-                # lidarPublisher.publish_lidars_frame()
+                lidarPublisher.upload_lidars_frame()
+                lidarPublisher.publish_lidars_frame()
             else:
                 failCount = failCount + 1
             if failCount == 5:
