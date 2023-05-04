@@ -46,7 +46,7 @@ class LidarPublisher:
                 self.temperature = lidar.temperatures
                 self.time = lidar.time_synchronization
         
-        data = bytes(jsonpickle.encode(LidarStatus(self.lidars[0]), "utf-8"))
+        data = bytes(jsonpickle.encode(LidarStatus(self.lidars[0])), "utf-8")
         self.ipc_client.publish_to_iot_core(topic_name="iot/lidars/status", payload=data, qos=QOS.AT_LEAST_ONCE)
         
         print("Published lidars status to Iot core")
