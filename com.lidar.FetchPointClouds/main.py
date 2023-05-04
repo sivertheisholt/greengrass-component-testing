@@ -22,7 +22,7 @@ def main():
         while True:
             lidars[0].fetch_state()
             # lidarPublisher.publish_lidars_status()
-            if lidars[0].scanner_status.state != 2:
+            if lidars[0].scanner_status.state == 2:
                 failCount = 0
                 lidar1.fetch_point_cloud()
                 s3 = boto3.client('s3')
