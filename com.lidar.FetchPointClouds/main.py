@@ -26,9 +26,13 @@ def main():
     ip_addresses = []
     ipc_client = None
 
+    print("PRINTING STUFF")
+    print(args)
+    print(len(args))
+
     if len(args) != 0:
         py_env = "prod"
-        ip_addresses = args[1].split(";")
+        ip_addresses = str(args[1]).split(";")
         ipc_client = GreengrassCoreIPCClientV2()
     else:
         ip_addresses = os.getenv("LIDAR_IPS").split(";")
