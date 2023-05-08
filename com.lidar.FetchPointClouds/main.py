@@ -1,41 +1,49 @@
+import os
+import sys
 import time
 import traceback
 
 from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
-from entities.lidar_cube_status.scanner import Scanner
-import jsonpickle
 
 from entities.lidar import Lidar
-from entities.lidar_publisher import LidarPublisher
+from services.lidar_service import LidarService
 
-import boto3
-from entities.lidar_cube_frame.frame import Frame
+from dotenv import load_dotenv
+load_dotenv()
+
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s :: %(levelname)s :: Module %(module)s :: Line No %(lineno)s :: %(message)s')
+
+def add_lidars(ip_addresses):
+    return [Lidar(address) for address in ip_addresses]
 
 def main():
-    print('Starting fetching lidar data')
-    try:
+    logging.info("Starting fetching lidar data")
+
+    # Handling environment
+    args = sys.argv[1:]
+    py_env = "dev"
+    ip_addresses = []
+    ipc_client = None
+
+    if len(args) != 0:
+        py_env = "prod"
+        ip_addresses = args[1].split(";")
         ipc_client = GreengrassCoreIPCClientV2()
-        lidar1 = Lidar("192.168.26.26")
-        lidars = [lidar1]
-        lidarPublisher = LidarPublisher(ipc_client, lidars)
-        failCount = 0
+    else:
+        ip_addresses = os.getenv("LIDAR_IPS").split(";")
+
+    try:
+        lidars = add_lidars(ip_addresses)
+        lidar_service = LidarService(lidars, ipc_client, py_env)
+
         while True:
-            lidars[0].fetch_state()
-            lidarPublisher.publish_lidars_status()
-            if lidars[0].scanner_status.state == 2:
-                failCount = 0
-                lidar1.fetch_point_cloud()
-                lidarPublisher.upload_lidars_frame()
-                lidarPublisher.publish_lidars_frame()
-            else:
-                failCount = failCount + 1
-            if failCount == 5:
-                print("Something is wrong with the lidars, exiting after 5 tries")
-                exit(1)
-            time.sleep(10)
+            lidar_service.run_data_handling()
+            time.sleep(15)
+
     except Exception as e:
-        print("An error occurred:", e)
-        print(traceback.format_exc())
+        logging.error("An error occurred: %s", e)
+        traceback.print_exception()
         exit(1)
 
 if __name__ == '__main__':

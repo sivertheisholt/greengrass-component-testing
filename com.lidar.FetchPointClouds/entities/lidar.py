@@ -1,5 +1,6 @@
 import blickfeld_scanner
 import copy
+import logging
 
 from entities.lidar_cube_status.scanner import Scanner
 from entities.lidar_cube_status.temperature import Temperature
@@ -12,30 +13,33 @@ class Lidar:
         self.temperatures = None
         self.time_synchronization = None
 
+    def is_ready(self) -> bool:
+        return self.scanner_status.state == 2
+
     def connect_scanner(self):
-        print("Connecting to lidar...")
+        logging.info("Connecting to lidar")
         device = blickfeld_scanner.scanner(self.ip)
-        print("Device connected")
+        logging.info("Device connected")
         return device
 
     def fetch_point_cloud(self):
-        print("Fetching point cloud...")
+        logging.info("Fetching point cloud")
         device = self.connect_scanner()
 
-        print("Getting stream...")
+        logging.info("Getting stream")
         stream = device.get_point_cloud_stream()
 
-        print("Receiving frame...")
+        logging.info("Receiving frame")
         frame = stream.recv_frame()
 
         self.frame_data = copy.deepcopy(frame)
 
         stream.stop()
         
-        print("Done fetching point cloud")
+        logging.info("Done fetching point cloud")
         
     def fetch_state(self):
-        print("Fetching status...")
+        logging.info("Fetching status")
         
         device = self.connect_scanner()
         status = device.get_status()
@@ -46,4 +50,4 @@ class Lidar:
         self.temperatures = [Temperature(temp) for temp in status_data.temperatures]
         self.time_synchronization = TimeSynchronization(status_data.time_synchronization)
 
-        print("Done fetching status")
+        logging.info("Done fetching status")

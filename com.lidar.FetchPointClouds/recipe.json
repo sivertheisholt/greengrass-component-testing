@@ -6,6 +6,7 @@
     "ComponentPublisher": "COMPONENT_AUTHOR",
     "ComponentConfiguration": {
       "DefaultConfiguration": {
+        "Environment": "development",
         "accessControl": {
           "aws.greengrass.ipc.mqttproxy": {
             "com.lidar.FetchPointClouds:mqttproxy:1": {
@@ -28,7 +29,7 @@
           "os": "linux"
         },
         "Lifecycle": {
-          "Install": "python3 -m pip install --user awsiotsdk --upgrade && pip3 install blickfeld_scanner --user awsiotsdk && pip3 install jsonpickle --user awsiotsdk && pip3 install boto3 --user awsiotsdk",
+          "Install": "python3 -m pip install --user awsiotsdk --upgrade && pip3 install blickfeld_scanner --user awsiotsdk && pip3 install jsonpickle --user awsiotsdk && pip3 install boto3 --user awsiotsdk && pip3 install python-dotenv --user awsiotsdk",
           "Run": "python3 -u {artifacts:decompressedPath}/com.lidar.FetchPointClouds/main.py"
         },
         "Artifacts": [
