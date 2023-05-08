@@ -5,7 +5,7 @@ from entities.lidar_publisher import LidarPublisher
 from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
 
 class LidarService:
-    def __init__(self, lidars: List[Lidar], ipc_client: GreengrassCoreIPCClientV2 | None, py_env) -> None:
+    def __init__(self, lidars: List[Lidar], ipc_client: GreengrassCoreIPCClientV2, py_env) -> None:
         self.lidars = lidars
         self.lidar_publisher = LidarPublisher(ipc_client, lidars)
         self.py_env = py_env

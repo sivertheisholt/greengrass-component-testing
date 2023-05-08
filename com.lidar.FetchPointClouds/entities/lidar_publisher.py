@@ -14,7 +14,7 @@ from entities.lidar_cube_frame.frame import Frame
 from entities.lidar_cube_status.scanner import Scanner
 
 class LidarPublisher:
-    def __init__(self, ipc_client: GreengrassCoreIPCClientV2 | None, lidars):
+    def __init__(self, ipc_client: GreengrassCoreIPCClientV2, lidars):
         self.ipc_client = ipc_client
         self.lidars = lidars
 
