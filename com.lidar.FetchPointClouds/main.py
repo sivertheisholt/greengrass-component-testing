@@ -25,6 +25,8 @@ def main():
     py_env = "dev"
     ip_addresses = []
     ipc_client = None
+    
+    print(os.environ.get('ENVIRONMENT'))
 
     print("PRINTING STUFF")
     print(args)
