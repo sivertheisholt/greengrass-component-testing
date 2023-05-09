@@ -6,7 +6,8 @@
     "ComponentPublisher": "COMPONENT_AUTHOR",
     "ComponentConfiguration": {
       "DefaultConfiguration": {
-        "Environment": "development",
+        "ENVIRONMENT": "development",
+        "LIDAR_IPS": "",
         "accessControl": {
           "aws.greengrass.ipc.mqttproxy": {
             "com.lidar.FetchPointClouds:mqttproxy:1": {
