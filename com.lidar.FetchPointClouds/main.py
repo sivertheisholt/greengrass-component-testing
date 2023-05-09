@@ -21,7 +21,7 @@ def main():
     logging.info("Starting fetching lidar data")
 
     # Handling environment
-    args = sys.argv[1]
+    args = sys.argv[1:]
     py_env = "dev"
     ip_addresses = []
     ipc_client = None
